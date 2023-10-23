@@ -18,10 +18,10 @@
 //Interupt registters base addresses
 
 //See BCM2711 Manual page 92
-#define ARM_LOCAL 0x4c0000000
+#define ARM_LOCAL_BASE 0x4c0000000
 
 //See BCM2711 Manual page 100
-#define ARMC 0x7e00b000
+#define ARMC_BASE 0x7e00b000
 
 enum {
     GPFSEL0         = PERIPHERAL_BASE + 0x200000,
@@ -55,7 +55,6 @@ enum {
 };
 
 // UART
-
 enum {
     AUX_BASE        = PERIPHERAL_BASE + 0x215000,
     AUX_IRQ         = AUX_BASE,
@@ -76,7 +75,7 @@ enum {
 };
 
 
-//System Timer Registers. BCM2711 manual page 142
+//System Timer Registers offsets. BCM2711 manual page 142
 enum {
     TIMER_CLO       = 0x04, //Lower 32 bits of the timer
     TIMER_CHI       = 0x08, //Higher 32 bits of the timer
@@ -87,6 +86,28 @@ enum {
     TIMER_C3        = 0x18  //Timer compare 3
 };
 
+
+//ARMC Interupts offsets. BCM2711 manual page 100
+enum {
+    IRQ0_PENDING0   = 0x200,
+    IRQ0_SET_EN_0   = 0x210,
+    IRQ0_CLR_EN_0   = 0x220,
+    IRQ0_STATUS0    = 0x230,
+
+    IRQ1_PENDING0   = 0x240,
+    IRQ1_SET_EN_0   = 0x250,
+
+    IRQ2_PENDING0   = 0x280,
+    IRQ2_SET_EN_0   = 0x290,
+
+    IRQ3_PENDING0   = 0x2C0,
+    IRQ3_SEN_EN_0   = 0x2D0 
+
+};
+
+
+//Old code. To be replaced.
+
 //TIMERS
 struct timer_regs {
     volatile unsigned int control_status;
@@ -94,6 +115,7 @@ struct timer_regs {
     volatile unsigned int counter_hi;
     volatile unsigned int compare[4];
 };
+
 
 struct arm_irq_regs_2711 {
     volatile unsigned int irq0_pending_0;

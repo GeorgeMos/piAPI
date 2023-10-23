@@ -44,7 +44,10 @@ void core1_main(void)
     //uart_hex(mmio_read(REGS_TIMER + TIMER_CLO));
 
     while (1) {
+        uart_writeText("Timer Reg: ");
         uart_hex(mmio_read(REGS_TIMER + TIMER_CLO));
+        uart_writeText("\tInterupt 0 Reg: ");
+        uart_hex(mmio_read(ARMC_BASE + IRQ0_STATUS0));
         uart_writeText("\n");
         //uart_hex(gpio_read(4));
         //uart_writeText("\n");
@@ -66,17 +69,11 @@ void core0_main(void)
             gpio_set(12, 1);
         }
     }
-    //irq_disable();
-    //disable_interrupt_controller();
 }
 
 void main(void)
 {
     //start_core3(core3_main);      // Kick it off on core 3
     start_core1(core1_main);        // Kick it off on core 1
-    //irq_init_vectors();
-    //enable_interrupt_controller();
-    //irq_enable();
-    //timer_init();
     core0_main();                 // Loop endlessly
 }
