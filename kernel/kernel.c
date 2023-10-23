@@ -17,7 +17,6 @@ void wait_msec(unsigned int n)
     do{asm volatile ("mrs %0, cntpct_el0" : "=r"(r));}while(r<t);
 }
 
-
 void core3_main(void)
 {
     clear_core3();                // Only run once
@@ -57,33 +56,27 @@ void core1_main(void)
 
 void core0_main(void)
 {
-    gpio_function(12, 1);
-    gpio_set(12, 1);
-    unsigned int currTime = getTimer_32_lsb();
-    unsigned int interval = 0x000FFFFF;
-    unsigned int nextTime = currTime + interval;
-    setTimer_compare_0(nextTime);
-    unsigned int status = 1;
+    //gpio_function(12, GPIO_FUNCTION_ALT0);  //Set pin 12 as pwm output (pin 12 has alt0 function PWM0 channel, BCM2711 Manual page 128)
+    //gpio_set(12, 1);
+    //gpio_pwm0_set(12, 100);
+    setTimer_compare_0(0x00FFFFFF);
     while (1){
         if(getTimerStatus_match_0()){
-            nextTime = getTimer_32_lsb() + interval;
-            setTimer_compare_0(nextTime);
-            if(status){
-                gpio_clear(12, 1);
-                status = 0;
-            }
-            else{
-                gpio_set(12, 1);
-                status = 1;
-            }
+            gpio_function(12, GPIO_FUNCTION_OUT);
+            gpio_set(12, 1);
         }
     }
+    //irq_disable();
+    //disable_interrupt_controller();
 }
 
 void main(void)
 {
     //start_core3(core3_main);      // Kick it off on core 3
     start_core1(core1_main);        // Kick it off on core 1
-
+    //irq_init_vectors();
+    //enable_interrupt_controller();
+    //irq_enable();
+    //timer_init();
     core0_main();                 // Loop endlessly
 }

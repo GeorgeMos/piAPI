@@ -12,16 +12,19 @@ unsigned int mmio_read(long reg) { return *(volatile unsigned int *)reg; }
 //Functions I made
 unsigned int gpio_read(unsigned int pin_number){
    unsigned int val = mmio_read(GPLEV0);
-   val >>= pin_number;  //Shft val to the right (Target bis is now LSB)
+   val >>= pin_number;  //Shift val to the right (Target bis is now LSB)
    val &= 0x00000001;   //AND all the other bits with 0 except the target bit (Left with 0 or 1 as LSB)
 
    return val;
 }
 
+//PWM. See BCM2711 Manual page 128
 //WIP
-void gpio_pwm(unsigned int pi_number, unsigned int value){
-    mmio_write(PWM0+PWM_CTL, 0x0D);
-    mmio_write(PWM0 + PWM_DAT1, 0xAAAAAAAA);
+void gpio_pwm0_set(unsigned int pin_number, unsigned int value){
+    mmio_write(PWM0+PWM_CTL, 0x0001);     //0000 0000 0000 0001
+    mmio_write(PWM0 + PWM_RNG1, 0xFF);
+    mmio_write(PWM0 + PWM_DAT1, 0x000000F);
+    mmio_write(PWM0 + PWM_FIF1, 0x000000F);
 }
 
 //----------------

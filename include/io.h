@@ -16,4 +16,4 @@ unsigned int gpio_pull    (unsigned int pin_number, unsigned int value);
 unsigned int gpio_function(unsigned int pin_number, unsigned int value);
 unsigned int gpio_read(unsigned int pin_number);
 void gpio_setPin(unsigned int pin_number, unsigned int onOrOff);
-void gpio_pwm(unsigned int pi_number, unsigned int value);
+void gpio_pwm0_set(unsigned int pin_number, unsigned int value);

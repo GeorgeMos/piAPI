@@ -15,6 +15,14 @@
 #define REGS_IRQ ((arm_irq_regs *)(PERIPHERAL_BASE + 0x0000B200))
 #define AUX_MU_BAUD(baud) ((AUX_UART_CLOCK/(baud*8))-1)
 
+//Interupt registters base addresses
+
+//See BCM2711 Manual page 92
+#define ARM_LOCAL 0x4c0000000
+
+//See BCM2711 Manual page 100
+#define ARMC 0x7e00b000
+
 enum {
     GPFSEL0         = PERIPHERAL_BASE + 0x200000,
     GPSET0          = PERIPHERAL_BASE + 0x20001C,
@@ -28,7 +36,8 @@ enum {
     PWM_CTL         = 0x00, //pwm control
     PWM_STA         = 0x04, //pwm status
     PWM_RNG1        = 0x10, //pwm channel 1 range
-    PWM_DAT1        = 0x14
+    PWM_DAT1        = 0x14,
+    PWM_FIF1        = 0x18
 };
 
 enum {
