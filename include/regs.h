@@ -105,7 +105,22 @@ enum {
 
 };
 
+//ARM_LOCAL Interupts offsets. BCM2711 manual page 92
+enum {
 
+};
+
+//ARM_LOCAL Mailboxes
+enum {
+
+};
+
+
+//TODO: Setup Interupts for Mailboxes. Add multicore messaging feature.
+
+
+
+//------------------------------------//
 //Old code. To be replaced.
 
 //TIMERS
